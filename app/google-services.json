@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "709026798640",
+    "firebase_url": "https://bookxchange-3d5a6.firebaseio.com",
+    "project_id": "bookxchange-3d5a6",
+    "storage_bucket": "bookxchange-3d5a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709026798640:android:c8ab509cc5d98830",
+        "android_client_info": {
+          "package_name": "com.example.vivek.bookxchange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709026798640-gqotsd3092ui4u6b3ul8m56isoa2dcnb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vivek.bookxchange",
+            "certificate_hash": "2bb4afc07210e3aea3ccd4c0eb069cdeb6a7b00e"
+          }
+        },
+        {
+          "client_id": "709026798640-iubl35hk3m0qolntrk662cnc58bdj45d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2L1-UD8do7R-j0hwvo1DIL2SElktIoPY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709026798640-iubl35hk3m0qolntrk662cnc58bdj45d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

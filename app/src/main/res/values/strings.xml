@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BookXchange</string>
+    <string name="Rs">\u20B9</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+</resources>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    tools:context=".AddBookActivity">
+
+    <TextView
+        android:id="@+id/headTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Enter Details"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/etBookName"
+        android:layout_below="@+id/headTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Book Name"
+        />
+
+    <EditText
+        android:id="@+id/etAuthorName"
+        android:layout_below="@+id/etBookName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Author"
+        />
+
+    <EditText
+        android:id="@+id/etPrice"
+        android:layout_below="@+id/etAuthorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Price"
+        />
+
+    <EditText
+        android:id="@+id/etDesc"
+        android:layout_below="@+id/etPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Short Description"
+        />
+
+    <ImageView
+        android:id="@+id/bookImageView"
+        android:layout_below="@+id/etDesc"
+        android:src="@drawable/icon2"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/uploadProgressBar"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/uploadProgressBar"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/uploadButton"
+        android:layout_margin="10dp"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+    <Button
+        android:id="@+id/chooseImageButton"
+        android:text="Select Imgae"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:padding="15dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/uploadButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Save"
+        android:padding="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/showAllButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Browse Books"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
