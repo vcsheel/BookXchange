@@ -79,8 +79,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void UserLogin() {
-        String email = etusername.getText().toString().trim();
-        String password = etpassword.getText().toString().trim();
+        //String email = etusername.getText().toString().trim();
+        //String password = etpassword.getText().toString().trim();
+
+        String email = "v@g.com";
+        String password = "qwert1";
 
         if (TextUtils.isEmpty(email)){
             Toast.makeText(this,"Email can't be empty",Toast.LENGTH_SHORT).show();

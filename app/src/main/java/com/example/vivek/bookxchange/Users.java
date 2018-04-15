@@ -1,71 +1,33 @@
 package com.example.vivek.bookxchange;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Users {
-    private String userId;
-    private String name;
-    private String emailId;
+    private Map<String,String> addedBooks;
+    private String email;
 
-    public List<Books> getMyRentedBooks() {
-        return myRentedBooks;
+    public Users() {
+        addedBooks = new HashMap<String, String>();
     }
 
-    public void setMyRentedBooks(List<Books> myRentedBooks) {
-        this.myRentedBooks = myRentedBooks;
+    public Map<String, String> getAddedBooks() {
+        return addedBooks;
     }
 
-    public List<Books> getMyAddedBooks() {
-        return myAddedBooks;
+    public void setAddedBooks(Map<String, String> addedBooks) {
+        this.addedBooks = addedBooks;
     }
 
-    public void setMyAddedBooks(List<Books> myAddedBooks) {
-        this.myAddedBooks = myAddedBooks;
+    public String getEmail() {
+        return email;
     }
 
-    public List<Books> getMyBoughtBooks() {
-        return myBoughtBooks;
-    }
-
-    public void setMyBoughtBooks(List<Books> myBoughtBooks) {
-        this.myBoughtBooks = myBoughtBooks;
-    }
-
-    private List<Books> myRentedBooks;
-    private List<Books> myAddedBooks;
-    private List<Books> myBoughtBooks;
-
-    public Users(String userId, String name, String emailId) {
-        this.userId = userId;
-        this.name = name;
-        this.emailId = emailId;
-    }
-
-    public Users(){
-
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

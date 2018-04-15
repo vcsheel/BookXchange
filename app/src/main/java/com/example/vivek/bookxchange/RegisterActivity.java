@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     LinearLayout bgLayout;
 
     private FirebaseAuth firebaseauth;
+    private DatabaseReference mDatabaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
         firebaseauth = FirebaseAuth.getInstance();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(this);
         etusername = (EditText) findViewById(R.id.etusername);
@@ -70,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void RegisterUser() {
-        String email = etusername.getText().toString().trim();
+        final String email = etusername.getText().toString().trim();
         String password = etpassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)){
@@ -91,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if (task.isSuccessful()){
+                            saveUserDetails(email);
                             finish();
                             Intent intent = new Intent(getApplicationContext(),BrowseBookActivity.class);
                             startActivity(intent);
@@ -103,5 +109,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     }
+
+    private void saveUserDetails(String email){
+        Users user = new Users();
+        user.setEmail(email);
+
+        FirebaseUser currUser = firebaseauth.getCurrentUser();
+        Log.i("curruser",currUser.getUid());
+        mDatabaseRef.child("Users").child(currUser.getUid()).setValue(user);
+        Log.i("UserInfo","Pushed to firebase");
+    }
+
 }
 

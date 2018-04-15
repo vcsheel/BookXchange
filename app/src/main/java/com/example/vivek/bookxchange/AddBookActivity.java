@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -17,14 +18,23 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -43,7 +53,10 @@ public class AddBookActivity extends AppCompatActivity {
 
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
+    private FirebaseAuth firebaseAuth;
     private StorageTask mUploadTask;
+    private Users u = new Users();
+    private String bookId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,33 +75,39 @@ public class AddBookActivity extends AppCompatActivity {
 
 
         mStorageRef = FirebaseStorage.getInstance().getReference("Books");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Books");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        chooseImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFileChooser();
-            }
-        });
+        if(firebaseAuth.getCurrentUser()==null){
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        }else {
 
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mUploadTask != null && mUploadTask.isInProgress()){
-                    Toast.makeText(AddBookActivity.this,"Upload is Progress",Toast.LENGTH_SHORT).show();
-                }else {
-                    uploadBookDetails();
+            chooseImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openFileChooser();
                 }
-            }
-        });
+            });
 
-        browsebooksButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddBookActivity.this, BrowseBookActivity.class);
-                startActivity(intent);
-            }
-        });
+            uploadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mUploadTask != null && mUploadTask.isInProgress()) {
+                        Toast.makeText(AddBookActivity.this, "Upload is Progress", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadBookDetails();
+                    }
+                }
+            });
+
+            browsebooksButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(AddBookActivity.this, BrowseBookActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     private void openFileChooser(){
@@ -115,11 +134,21 @@ public class AddBookActivity extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cr.getType(uri));
     }
 
+    private void addBookToUser(){
+        try {
+            final FirebaseUser currUser = firebaseAuth.getCurrentUser();
+            Log.i("CurrUser",currUser.getUid()+" "+bookId);
+            mDatabaseRef.child("Users").child(currUser.getUid()).child("addedBooks").push().setValue(bookId);
+        }catch (Exception e){
+            Log.e("Exception",e.getMessage());
+        }
+    }
+
     private void uploadBookDetails(){
         if(bookImageUri == null){
             Toast.makeText(this,"No image selected",Toast.LENGTH_SHORT).show();
         }else {
-            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
             +"."+getFileExtension(bookImageUri));
 
             mUploadTask = fileReference.putFile(bookImageUri)
@@ -139,8 +168,12 @@ public class AddBookActivity extends AppCompatActivity {
                                     etAuthorName.getText().toString().trim(),etDesc.getText().toString().trim(),
                                     Float.parseFloat(etPrice.getText().toString().trim()));
 
-                            String bookId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(bookId).setValue(book);
+                            bookId = mDatabaseRef.push().getKey();
+                            mDatabaseRef.child("Books").child(bookId).setValue(book);
+
+                            //Add book to user
+                            addBookToUser();
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
