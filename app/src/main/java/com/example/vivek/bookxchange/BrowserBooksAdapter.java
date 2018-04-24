@@ -1,15 +1,19 @@
 package com.example.vivek.bookxchange;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class BrowserBooksAdapter extends RecyclerView.Adapter<BrowserBooksAdapter.BookViewHolder> {
@@ -29,8 +33,8 @@ public class BrowserBooksAdapter extends RecyclerView.Adapter<BrowserBooksAdapte
     }
 
     @Override
-    public void onBindViewHolder(BookViewHolder holder, int position) {
-        Books currentBook = mBooks.get(position);
+    public void onBindViewHolder(BookViewHolder holder, final int position) {
+        final Books currentBook = mBooks.get(position);
         holder.bookName.setText(currentBook.getBookName());
         holder.authorName.setText(currentBook.getBookAuthor());
         holder.bookPrice.setText("\u20B9 "+String.valueOf(currentBook.getBookPrice()));
@@ -40,6 +44,18 @@ public class BrowserBooksAdapter extends RecyclerView.Adapter<BrowserBooksAdapte
                 .fit()
                 .centerInside()
                 .into(holder.bookImageView);
+
+        //Setting OnClickListener for card items
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Change later by sending bookid and retreivign book details by Id from next Activity
+                //Toast.makeText(mContext,"Clicked : "+String.valueOf(position),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext,BookDetailsActivity.class);
+                intent.putExtra("BookObject", (Serializable) currentBook);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

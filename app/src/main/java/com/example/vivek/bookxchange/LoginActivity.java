@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()){
                             Intent intent = new Intent(getApplicationContext(),BrowseBookActivity.class);
                             startActivity(intent);
+                            finish();
                         }else {
                             Toast.makeText(LoginActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                         }

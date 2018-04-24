@@ -100,6 +100,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             finish();
                             Intent intent = new Intent(getApplicationContext(),BrowseBookActivity.class);
                             startActivity(intent);
+                            finish();
                         }
                         else {
                             Toast.makeText(RegisterActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();

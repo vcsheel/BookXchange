@@ -1,6 +1,10 @@
 package com.example.vivek.bookxchange;
 
-public class Books {
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class Books implements Serializable{
 
     private String bookName;
     private String bookImageUrl;
