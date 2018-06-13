@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".BookDetailsActivity">
 
-    <include layout="@layout/toolbar"
+    <include layout="@layout/transparent_toolbar"
         android:id="@+id/toolbard" />
 
     <ScrollView

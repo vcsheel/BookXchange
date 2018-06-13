@@ -1,6 +1,8 @@
 package com.example.vivek.bookxchange;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +29,9 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbard = (Toolbar) findViewById(R.id.toolbard);
         setSupportActionBar(toolbard);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Detail");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         bookdImageView = (ImageView) findViewById(R.id.bookFullImage);
         bookdNameTV = (TextView) findViewById(R.id.bookdNameTV);
