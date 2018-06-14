@@ -108,7 +108,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
 
-
     }
 
     private void saveUserDetails(String email){
